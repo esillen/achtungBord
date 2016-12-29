@@ -2,6 +2,8 @@ import pygame
 from pygame.locals import *
 import RPi.GPIO as GPIO
 
+GPIO.setmode(GPIO.BOARD)
+
 p1 = (2,3)
 p2 = (17,27)
 p3 = (10,9)
@@ -16,7 +18,7 @@ playerInputs = (p1,p2,p3,p4,p5,p6,p7,p8)
 startInput = 21
 
 def setup_inputs():
-    GPIO.setmode(GPIO.BOARD)
+
     GPIO.setup(21, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     for inputs in playerInputs:
         GPIO.setup(inputs[0], GPIO.IN, pull_up_down=GPIO.PUD_UP)
