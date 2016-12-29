@@ -9,6 +9,8 @@ from pygame.locals import *
 # TODO: Implement coin thingy in a good way
 
 
+inputModule.setup_inputs()
+
 pygame.init()
 fpsClock = pygame.time.Clock()
 readyFont = pygame.font.Font('freesansbold.ttf', 25)
