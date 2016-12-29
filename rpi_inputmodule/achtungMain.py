@@ -17,7 +17,8 @@ readyFont = pygame.font.Font('freesansbold.ttf', 25)
 spelaFont = pygame.font.Font('freesansbold.ttf', 50)
 logoFont = pygame.font.Font('freesansbold.ttf', 200)
 
-windowSurfaceObj = pygame.display.set_mode((game.screenWidth, game.screenHeight))
+#windowSurfaceObj = pygame.display.set_mode((game.screenWidth, game.screenHeight))
+windowSurfaceObj = pygame.display.set_mode((game.screenWidth, game.screenHeight), pygame.FULLSCREEN)
 pygame.display.set_caption('!achtung!')
 
 readyTextPositions = ((100, 0), (100, 50), (100, 100), (100, 150), (100, 200), (100, 250), (100, 300), (100, 350))
