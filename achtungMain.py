@@ -1,4 +1,4 @@
-# -*- coding: cp1252 -*-
+# -*- coding: utf-8 -*-
 import pygame,sys,time
 import achtungGame as game
 import inputModule,playerModule
@@ -53,13 +53,13 @@ def displayRotatedText(text, font, color, rot, center):
 
 def displayInfo():
     #creditText = "Riksdaler: " + str(credits)
-    creditText = "Spelet är gratis!"
+    creditText = u"Spelet Ã¤r gratis!"
     displayRotatedText(creditText, readyFont, pygame.Color(0, 255, 255), 0, (game.screenWidth/2, game.screenHeight/2))
     if playersReady()>=2:
         #displayRotatedText('spel: '+str(gameCost())+' Riksdaler',readyFont,pygame.Color(0,255,0),0,(game.screenWidth/2,game.screenHeight/2+50))
-        displayRotatedText(str(playersReady()) + ' spelare är redo!',readyFont,pygame.Color(0,255,0),0,(game.screenWidth/2,game.screenHeight/2+50))
+        displayRotatedText(str(playersReady()) + u' spelare Ã¤r redo!',readyFont,pygame.Color(0,255,0),0,(game.screenWidth/2,game.screenHeight/2+50))
 
-        displayRotatedText('Poäng för att vinna: '+str(playersReady()*10-10),readyFont,pygame.Color(120,0,255),0,(game.screenWidth/2,game.screenHeight/2+100))
+        displayRotatedText(u'PoÃ¤ng fÃ¶r att vinna: '+str(playersReady()*10-10),readyFont,pygame.Color(120,0,255),0,(game.screenWidth/2,game.screenHeight/2+100))
 
 
 def displayTextAndLogo():
@@ -69,6 +69,7 @@ def displayTextAndLogo():
 #collect Money
 #credits = 30
 #The main loop!!
+exiting = False
 while True:
     game.resetPlayers()
     #let players ready up
@@ -83,18 +84,23 @@ while True:
                 player.ready = False
             if player.ready:
                 displayReadyText(player.playerId)
-        
+
         pressed = pygame.key.get_pressed() # perhaps use the event queue?
+        if pressed[K_ESCAPE]:
+            exiting = True
+            break
         if pressed[K_SPACE]:
             if playersReady()>1:# and gameCost()<=credits:
                 #Start the game!
                 #credits-=gameCost()
                 break #Break here to reach the game loop!
-        
+
         pygame.display.update()
         fpsClock.tick(30)
         pygame.event.pump() # THIS MUST BE DONE!!!
     # The actual game loop!!
+    if exiting:
+        break
     game.gameLoop(activePlayers(), windowSurfaceObj)
     # Score screen
     # Ad screen
