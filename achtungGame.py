@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import pygame,playerModule,inputModule,scoreScreen
 from pygame.locals import *
 screenHeight = 600
@@ -58,7 +60,7 @@ def gameLoop(players,pygameSurface):
         wmargin = 50
 
     #Start game loop!!
-        
+
     while True:
         #Make a surface in the game field
         pygameSurface.fill(backgroundColor)
@@ -86,7 +88,7 @@ def gameLoop(players,pygameSurface):
                 fpsClock.tick(30)
                 pygame.event.pump()
         #So that we don't collide in our line
-        drawField(pygameSurface)   
+        drawField(pygameSurface)
         for player in players:
             player.updateDirection(inputModule.takeInput(player.playerId))
             tempPlayerPos = player.getRoundedPos()
@@ -117,9 +119,9 @@ def gameLoop(players,pygameSurface):
                 alive_color = player.color
                 break
         s_pressed_time = 0.0
-        drawText("Rundan ar over!", 30, (screenWidth/2, screenHeight/2 -20), alive_color, pygameSurface)
-        drawText("Tryck start: nasta runda", 10, (screenWidth/2, screenHeight/2 ), alive_color, pygameSurface)
-        drawText("Hall start: huvudmenyn", 10, (screenWidth/2, screenHeight/2 + 10), alive_color, pygameSurface)
+        drawText(u"Rundan är over!", 30, (screenWidth/2, screenHeight/2 -20), alive_color, pygameSurface)
+        drawText(u"Tryck start: nästa runda", 10, (screenWidth/2, screenHeight/2 ), alive_color, pygameSurface)
+        drawText(u"Håll start: huvudmenyn", 10, (screenWidth/2, screenHeight/2 + 10), alive_color, pygameSurface)
         while True:
             if inputModule.takeStartInput():
                 s_pressed_time += 1.0/30.0
@@ -140,7 +142,7 @@ def gameLoop(players,pygameSurface):
             if player.score>=len(players)*10-10:
                 scoreScreen.scoreScreen(players,pygameSurface)
                 return
-        
+
 def drawField(surface):
     #Big surface
     pygame.draw.rect(surface,fieldColor,pygame.Rect(wmargin+fieldCornerRadius,hmargin+fieldCornerRadius,screenWidth-2*wmargin-2*fieldCornerRadius,screenHeight-2*hmargin-2*fieldCornerRadius))
@@ -154,7 +156,7 @@ def drawField(surface):
     pygame.draw.circle(surface,fieldColor,(screenWidth-wmargin-fieldCornerRadius,hmargin+fieldCornerRadius),fieldCornerRadius)
     pygame.draw.circle(surface,fieldColor,(wmargin+fieldCornerRadius,screenHeight-hmargin-fieldCornerRadius),fieldCornerRadius)
     pygame.draw.circle(surface,fieldColor,(screenWidth-wmargin-fieldCornerRadius,screenHeight-hmargin-fieldCornerRadius),fieldCornerRadius)
-    
+
 def playersStillAlive(players):
     alive = 0
     for player in players:
