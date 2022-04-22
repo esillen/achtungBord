@@ -141,11 +141,11 @@ def gameLoop(players, pygameSurface):
                 s_pressed_time += 1.0/30.0
                 if s_pressed_time > 0.5:
                     pygame.draw.circle(
-                        pygameSurface, BACKGROUND_COLOR, (SCREEN_HEIGHT/2, SCREEN_WIDTH/2 + 50), 20)
+                        pygameSurface, BACKGROUND_COLOR, (SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 50), 20)
                     pygame.draw.circle(
-                        pygameSurface, FIELD_COLOR, (SCREEN_HEIGHT/2, SCREEN_WIDTH/2 + 50), 19)
+                        pygameSurface, FIELD_COLOR, (SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 50), 19)
                     pygame.draw.circle(pygameSurface, BACKGROUND_COLOR, (
-                        SCREEN_HEIGHT/2, SCREEN_WIDTH/2 + 50), int(19.0*(s_pressed_time/5.0)))
+                        SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 50), int(19.0*(s_pressed_time/5.0)))
             elif s_pressed_time > 0.001:
                 break
             if s_pressed_time > 5.0:
