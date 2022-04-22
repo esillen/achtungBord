@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
-import pygame,sys,time
+import pygame
+import sys
 import achtungGame as game
-import inputModule,playerModule
+from settings import SNAKE_COLORS, USE_FULL_SCREEN, USE_GPIO_INPUT, SCREEN_HEIGHT, SCREEN_WIDTH
 from pygame.locals import *
 
-# TODO: implement better collision detection (for instance extra points on the side of le schnake)
-# TODO: right now remove coin thingy completely
-# TODO: Implement coin thingy in a good way
+if USE_GPIO_INPUT:
+    import gpioInputModule as inputModule
+else:
+    import keyboardInputModule as inputModule
 
 
 pygame.init()
@@ -15,7 +17,11 @@ readyFont = pygame.font.Font('freesansbold.ttf', 25)
 spelaFont = pygame.font.Font('freesansbold.ttf', 50)
 logoFont = pygame.font.Font('freesansbold.ttf', 200)
 
-windowSurfaceObj = pygame.display.set_mode((game.screenWidth, game.screenHeight))
+if USE_FULL_SCREEN:
+    windowSurfaceObj = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
+else:
+    windowSurfaceObj = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+
 pygame.display.set_caption('!achtung!')
 
 readyTextPositions = ((100, 0), (100, 50), (100, 100), (100, 150), (100, 200), (100, 250), (100, 300), (100, 350))
@@ -40,9 +46,9 @@ def gameCost():
     return playersReady()*3
 
 def displayReadyText(playerId):
-    centerx = game.textAligns[playerId][1][0]+(game.screenWidth/2-game.textAligns[playerId][1][0])*0.2
-    centery = game.textAligns[playerId][1][1]+(game.screenWidth/2-game.textAligns[playerId][1][1])*0.2
-    displayRotatedText('Redo!', readyFont, game.colors[playerId], game.textAligns[playerId][0], (centerx, centery))
+    centerx = game.textAligns[playerId][1][0]+(SCREEN_WIDTH/2-game.textAligns[playerId][1][0])*0.2
+    centery = game.textAligns[playerId][1][1]+(SCREEN_WIDTH/2-game.textAligns[playerId][1][1])*0.2
+    displayRotatedText('Redo!', readyFont, SNAKE_COLORS[playerId], game.textAligns[playerId][0], (centerx, centery))
 
 def displayRotatedText(text, font, color, rot, center):
     readyTextObj = font.render(text, False, color)
@@ -54,22 +60,28 @@ def displayRotatedText(text, font, color, rot, center):
 def displayInfo():
     #creditText = "Riksdaler: " + str(credits)
     creditText = u"Spelet är gratis!"
-    displayRotatedText(creditText, readyFont, pygame.Color(0, 255, 255), 0, (game.screenWidth/2, game.screenHeight/2))
+    displayRotatedText(creditText, readyFont, pygame.Color(0, 255, 255), 0, (SCREEN_WIDTH/2, SCREEN_HEIGHT/2))
     if playersReady()>=2:
-        #displayRotatedText('spel: '+str(gameCost())+' Riksdaler',readyFont,pygame.Color(0,255,0),0,(game.screenWidth/2,game.screenHeight/2+50))
-        displayRotatedText(str(playersReady()) + u' spelare är redo!',readyFont,pygame.Color(0,255,0),0,(game.screenWidth/2,game.screenHeight/2+50))
+        #displayRotatedText('spel: '+str(gameCost())+' Riksdaler',readyFont,pygame.Color(0,255,0),0,(SCREEN_WIDTH/2,SCREEN_HEIGHT/2+50))
+        displayRotatedText(str(playersReady()) + u' spelare är redo!',readyFont,pygame.Color(0,255,0),0,(SCREEN_WIDTH/2,SCREEN_HEIGHT/2+50))
 
-        displayRotatedText(u'Poäng för att vinna: '+str(playersReady()*10-10),readyFont,pygame.Color(120,0,255),0,(game.screenWidth/2,game.screenHeight/2+100))
+        displayRotatedText(u'Poäng för att vinna: '+str(playersReady()*10-10),readyFont,pygame.Color(120,0,255),0,(SCREEN_WIDTH/2,SCREEN_HEIGHT/2+100))
 
 
 def displayTextAndLogo():
-    displayRotatedText('spela',spelaFont,pygame.Color(255,0,255),45,(game.screenWidth/4,game.screenHeight/4))
-    displayRotatedText('ACHTUNG!',spelaFont,pygame.Color(255,50,20),0,(game.screenWidth/2,game.screenHeight/3))
+    displayRotatedText('spela',spelaFont,pygame.Color(255,0,255),45,(SCREEN_WIDTH/4,SCREEN_HEIGHT/4))
+    displayRotatedText('ACHTUNG!',spelaFont,pygame.Color(255,50,20),0,(SCREEN_WIDTH/2,SCREEN_HEIGHT/3))
+
+
+def check_exit_event():
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
 
 #collect Money
 #credits = 30
 #The main loop!!
-exiting = False
 while True:
     game.resetPlayers()
     #let players ready up
@@ -86,9 +98,6 @@ while True:
                 displayReadyText(player.playerId)
 
         pressed = pygame.key.get_pressed() # perhaps use the event queue?
-        if pressed[K_ESCAPE]:
-            exiting = True
-            break
         if pressed[K_SPACE]:
             if playersReady()>1:# and gameCost()<=credits:
                 #Start the game!
@@ -98,9 +107,8 @@ while True:
         pygame.display.update()
         fpsClock.tick(30)
         pygame.event.pump() # THIS MUST BE DONE!!!
+        check_exit_event()
     # The actual game loop!!
-    if exiting:
-        break
     game.gameLoop(activePlayers(), windowSurfaceObj)
     # Score screen
     # Ad screen
