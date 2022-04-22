@@ -27,6 +27,14 @@ BLINK_TIME = 10
 DIRECTION_LINE_LENGTH = SNAKE_SIZE * 3
 
 # Colors
-SNAKE_COLORS = (pygame.Color(255, 255, 255), pygame.Color(255, 0, 0), pygame.Color(0, 255, 0), pygame.Color(0, 0, 255), pygame.Color(255, 255, 0), pygame.Color(255, 0, 255), pygame.Color(0, 255, 255), pygame.Color(255, 150, 0))
-BACKGROUND_COLOR = pygame.Color(255, 153, 204) #pink
-FIELD_COLOR = pygame.Color(0, 0, 0) #black
+SNAKE_COLORS = (pygame.Color(255, 255), # yellow
+                pygame.Color(255, 0, 0), # red
+                pygame.Color(0, 255, 0), # green
+                pygame.Color(0, 0, 255), # blue
+                pygame.Color(255, 255, 255), # white
+                pygame.Color(255, 0, 255), # pink
+                pygame.Color(0, 255, 255), # teal
+                pygame.Color(255, 150, 0)) # orange
+
+BACKGROUND_COLOR = pygame.Color(255, 153, 204) # light pink
+FIELD_COLOR = pygame.Color(0, 0, 0) # black
