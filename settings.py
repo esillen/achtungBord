@@ -8,10 +8,10 @@ MAX_NUM_PLAYERS = 4 # Currently only works well with 4 and 8 max players
 GAME_FPS = 30
 
 # Input
-USE_GPIO_INPUT = False
+USE_GPIO_INPUT = True
 
 # Screen
-USE_FULL_SCREEN = False
+USE_FULL_SCREEN = True
 SCREEN_HEIGHT = 540
 SCREEN_WIDTH = 960
 

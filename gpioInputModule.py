@@ -13,12 +13,11 @@ p8 = (16, 20)
 
 playerInputs = (p1, p2, p3, p4, p5, p6, p7, p8)
 
-startInput = 21
+START_INPUT = 21
 
-
-def setup_inputs():
+def _setup_inputs():
     GPIO.setmode(GPIO.BCM)
-    GPIO.setup(21, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(START_INPUT, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     for inputs in playerInputs:
         GPIO.setup(inputs[0], GPIO.IN, pull_up_down=GPIO.PUD_UP)
         GPIO.setup(inputs[1], GPIO.IN, pull_up_down=GPIO.PUD_UP)
@@ -34,6 +33,9 @@ def takeInput(playerId):
 
 
 def takeStartInput():
-    if not GPIO.input(21):
+    if not GPIO.input(START_INPUT):
         return True
     return False
+
+
+_setup_inputs()

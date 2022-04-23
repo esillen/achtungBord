@@ -10,8 +10,9 @@ if USE_GPIO_INPUT:
 else:
     import keyboardInputModule as inputModule
 
-
 pygame.init()
+pygame.mouse.set_visible(False)
+
 fpsClock = pygame.time.Clock()
 readyFont = pygame.font.Font('freesansbold.ttf', 25)
 spelaFont = pygame.font.Font('freesansbold.ttf', 50)
@@ -102,12 +103,10 @@ while True:
             if player.ready:
                 displayReadyText(player.playerId)
 
-        pressed = pygame.key.get_pressed() # perhaps use the event queue?
-        if pressed[K_SPACE]:
-            if playersReady()>1:# and gameCost()<=credits:
-                #Start the game!
-                #credits-=gameCost()
-                break #Break here to reach the game loop!
+        if inputModule.takeStartInput() and playersReady()>1: #and gameCost()<=credits:
+            #Start the game!
+            #credits-=gameCost()
+            break #Break here to reach the game loop!
 
         pygame.display.update()
         fpsClock.tick(GAME_FPS)
