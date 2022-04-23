@@ -1,6 +1,12 @@
 # -*- coding: utf-8 -*-
 import pygame
 
+# All mentions of "time" mean 1 tick of the clock (30 fps)
+
+# General
+MAX_NUM_PLAYERS = 4 # Currently only works well with 4 and 8 max players
+GAME_FPS = 30
+
 # Input
 USE_GPIO_INPUT = False
 
@@ -16,10 +22,10 @@ FIELD_CORNER_RADIUS = 30
 # Gameplay settings
 ANGLE_SPEED = 5.0
 FORWARD_SPEED = 2.5
-HOLE_TIMER_MIN = 90
+HOLE_TIMER_MIN = 50
 HOLE_TIMER_MAX = 150
 SPAWN_MARGIN = 30
-SNAKE_SIZE = 3
+SNAKE_SIZE = 3 # Should be an odd number or weird things happen
 HOLE_SIZE = 10 # Number of updates during a hole
 
 # Spawn settings
@@ -27,7 +33,7 @@ BLINK_TIME = 10
 DIRECTION_LINE_LENGTH = SNAKE_SIZE * 3
 
 # Colors
-SNAKE_COLORS = (pygame.Color(255, 255), # yellow
+SNAKE_COLORS = (pygame.Color(255, 255, 0), # yellow
                 pygame.Color(255, 0, 0), # red
                 pygame.Color(0, 255, 0), # green
                 pygame.Color(0, 0, 255), # blue

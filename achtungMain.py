@@ -2,7 +2,7 @@
 import pygame
 import sys
 import achtungGame as game
-from settings import SNAKE_COLORS, USE_FULL_SCREEN, USE_GPIO_INPUT, SCREEN_HEIGHT, SCREEN_WIDTH
+from settings import SNAKE_COLORS, USE_FULL_SCREEN, USE_GPIO_INPUT, SCREEN_HEIGHT, SCREEN_WIDTH, GAME_FPS
 from pygame.locals import *
 
 if USE_GPIO_INPUT:
@@ -46,9 +46,16 @@ def gameCost():
     return playersReady()*3
 
 def displayReadyText(playerId):
-    centerx = game.textAligns[playerId][1][0]+(SCREEN_WIDTH/2-game.textAligns[playerId][1][0])*0.2
-    centery = game.textAligns[playerId][1][1]+(SCREEN_WIDTH/2-game.textAligns[playerId][1][1])*0.2
-    displayRotatedText('Redo!', readyFont, SNAKE_COLORS[playerId], game.textAligns[playerId][0], (centerx, centery))
+    centerx = 0
+    centery = 0
+    marginh = 20
+    if player.playerId < 4: 
+        centerx = (3 + player.playerId * 4) * SCREEN_WIDTH / 18
+        centery = SCREEN_HEIGHT - marginh
+    else:
+        centerx = (3 + (player.playerId - 4) * 4) * SCREEN_WIDTH / 18
+        centery = marginh
+    displayRotatedText('Redo!', readyFont, SNAKE_COLORS[playerId], 0, (centerx, centery))
 
 def displayRotatedText(text, font, color, rot, center):
     readyTextObj = font.render(text, False, color)
@@ -105,7 +112,7 @@ while True:
                 break #Break here to reach the game loop!
 
         pygame.display.update()
-        fpsClock.tick(30)
+        fpsClock.tick(GAME_FPS)
         pygame.event.pump() # THIS MUST BE DONE!!!
         check_exit_event()
     # The actual game loop!!

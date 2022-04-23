@@ -7,7 +7,7 @@ import scoreScreen
 from pygame.locals import *
 
 from settings import BACKGROUND_COLOR, FIELD_COLOR, USE_GPIO_INPUT, SNAKE_COLORS, SCREEN_HEIGHT, \
-    SCREEN_WIDTH, SNAKE_SIZE, BLINK_TIME
+    SCREEN_WIDTH, SNAKE_SIZE, BLINK_TIME, GAME_FPS
 if USE_GPIO_INPUT:
     import gpioInputModule as inputModule
 else:
@@ -48,16 +48,16 @@ def gameLoop(players, pygameSurface):
         hmargin = int((1.0/4.0)*SCREEN_HEIGHT)
         wmargin = int((1.0/4.0)*SCREEN_WIDTH)
     elif len(players) == 4:
-        hmargin = 50
+        hmargin = 55
         wmargin = int((1.0/4.0)*SCREEN_WIDTH)
     elif len(players) == 5:
-        hmargin = 50
+        hmargin = 55
         wmargin = int((1.0/6.0)*SCREEN_WIDTH)
     elif len(players) == 6:
-        hmargin = 50
+        hmargin = 55
         wmargin = int((1.0/8.0)*SCREEN_WIDTH)
     else:
-        hmargin = 50
+        hmargin = 55
         wmargin = 50
 
     # Start game loop!!
@@ -89,7 +89,7 @@ def gameLoop(players, pygameSurface):
                     pygame.draw.aaline(pygameSurface, (player.color), tempPlayerPos, (
                         tempPlayerPos[0] + player.currentDirection[0]*directionLineLen, tempPlayerPos[1] + player.currentDirection[1]*directionLineLen), 1)
                 pygame.display.update()
-                fpsClock.tick(30)
+                fpsClock.tick(GAME_FPS)
                 pygame.event.pump()
                 check_exit_event()
         # So that we don't collide in our line
@@ -121,7 +121,7 @@ def gameLoop(players, pygameSurface):
                         drawScores(players, pygameSurface)
             pygame.display.update()
             pygame.event.pump()
-            fpsClock.tick(30)
+            fpsClock.tick(GAME_FPS)
             check_exit_event()
         # ONLY ONE SURVIVOR HERE! (ROUND IS OVER)
         alive_color = players[0].color # Fallback if all dies simultaneously
@@ -154,7 +154,7 @@ def gameLoop(players, pygameSurface):
             # fancy artsy stuff happen here
             pygame.display.update()
             pygame.event.pump()
-            fpsClock.tick(30)
+            fpsClock.tick(GAME_FPS)
             check_exit_event()
         for player in players:
             if player.score >= len(players) * 10 - 10:
@@ -199,36 +199,23 @@ def updateScores(players):
         if player.alive:
             player.score += 1  # Update score here
 
-
-ptextw = 50
-ptexth = 30
-textMargin = 50
-p1a = (0, (SCREEN_WIDTH/2, SCREEN_HEIGHT-textMargin/2), (ptextw, ptexth))
-p2a = (45, (SCREEN_WIDTH-textMargin/2, SCREEN_HEIGHT-textMargin/2), (ptextw, ptexth))
-p3a = (90, (SCREEN_WIDTH-textMargin/2, SCREEN_HEIGHT/2), (ptextw, ptexth))
-p4a = (135, (SCREEN_WIDTH-textMargin/2, textMargin/2), (ptextw, ptexth))
-p5a = (180, (SCREEN_WIDTH/2, textMargin/2), (ptextw, ptexth))
-p6a = (225, (textMargin/2, textMargin/2), (ptextw, ptexth))
-p7a = (270, (textMargin/2, SCREEN_HEIGHT/2), (ptextw, ptexth))
-p8a = (315, (textMargin/2, SCREEN_HEIGHT-textMargin/2), (ptextw, ptexth))
-
-textAligns = (p1a, p2a, p3a, p4a, p5a, p6a, p7a, p8a)
-
-
 def drawScores(players, surface):
-    font = pygame.font.Font('freesansbold.ttf', 30)
+    font = pygame.font.Font('freesansbold.ttf', 25)
+    text_margin_h = 27
+    circle_radius = 25
     for player in players:
 
         textSurf = font.render(str(player.score), True,
                                SNAKE_COLORS[player.playerId], (0, 0, 0))
-        #rotatedSurf = pygame.transform.scale(textSurf,textAligns[player.playerId][2])
-        rotatedSurf = pygame.transform.rotate(
-            textSurf, textAligns[player.playerId][0])
-        rotatedRect = rotatedSurf.get_rect()
-        rotatedRect.center = textAligns[player.playerId][1]
-        pygame.draw.circle(surface, (0, 0, 0), (rotatedRect.center), 40)
+        textRect = textSurf.get_rect()
+        # Places the texts at nice margins from each other
+        if player.playerId < 4: 
+            textRect.center = ((3 + player.playerId * 4) * SCREEN_WIDTH / 18, SCREEN_HEIGHT-text_margin_h)
+        else:
+            textRect.center = ((3 + (player.playerId - 4) * 4) * SCREEN_WIDTH / 18, text_margin_h)
+        pygame.draw.circle(surface, (0, 0, 0), (textRect.center), circle_radius)
 
-        surface.blit(rotatedSurf, rotatedRect)
+        surface.blit(textSurf, textRect)
 
 
 def drawText(text, size, pos, color, surface):
