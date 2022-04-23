@@ -4,17 +4,17 @@ import time
 from pygame.locals import *
 from settings import FIELD_COLOR, SCREEN_WIDTH, SNAKE_COLORS, TIME_UNTIL_SCORE_SCREEN_TIMEOUT_SECONDS
 
-margin = 100
+margin = 200
 
 
 def scoreScreen(players, pygameSurface, inputModule):
-    font = pygame.font.Font('freesansbold.ttf', 25)
+    font = pygame.font.Font('freesansbold.ttf', 50)
     pygameSurface.fill(FIELD_COLOR)
     i = 0
     players.sort()
     for player in players:
         # display score under each other
-        textSurf = font.render("spelare " + str(player.playerId + 1) + ": " + str(
+        textSurf = font.render("Spelare " + str(player.playerId + 1) + ": " + str(
             player.score), True, SNAKE_COLORS[player.playerId], FIELD_COLOR)
         textRect = textSurf.get_rect()
         textRect.center = (SCREEN_WIDTH/2, margin+margin*i)

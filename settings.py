@@ -12,20 +12,20 @@ USE_GPIO_INPUT = True
 
 # Screen
 USE_FULL_SCREEN = True
-SCREEN_HEIGHT = 540
-SCREEN_WIDTH = 960
+SCREEN_HEIGHT = 1080
+SCREEN_WIDTH = 1920
 
 # Playing field
 PLAY_FIELD_RADIUS = (SCREEN_WIDTH // 2) - 20
 FIELD_CORNER_RADIUS = 30
 
 # Gameplay settings
-ANGLE_SPEED = 5.0
-FORWARD_SPEED = 2.5
+ANGLE_SPEED = 4.5
+FORWARD_SPEED = 5.0
 HOLE_TIMER_MIN = 50
 HOLE_TIMER_MAX = 150
 SPAWN_MARGIN = 30
-SNAKE_SIZE = 3 # Should be an odd number or weird things happen
+SNAKE_SIZE = 5 # Should be an odd number or weird things happen
 HOLE_SIZE = 10 # Number of updates during a hole
 
 # Spawn settings

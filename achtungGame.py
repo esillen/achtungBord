@@ -121,22 +121,22 @@ def gameLoop(players, pygameSurface):
                 alive_color = player.color
                 break
         s_pressed_time = 0.0
-        drawText(u"Rundan är över!", 30, (SCREEN_WIDTH / 2,
-                 (SCREEN_HEIGHT / 2) - 20), alive_color, pygameSurface)
-        drawText(u"Tryck start: nästa runda", 10, (SCREEN_WIDTH /
+        drawText(u"Rundan är över!", 60, (SCREEN_WIDTH / 2,
+                 (SCREEN_HEIGHT / 2) - 40), alive_color, pygameSurface)
+        drawText(u"Tryck start: nästa runda", 20, (SCREEN_WIDTH /
                  2, SCREEN_HEIGHT / 2), alive_color, pygameSurface)
-        drawText(u"Håll start: huvudmenyn", 10, (SCREEN_WIDTH / 2,
-                 SCREEN_HEIGHT / 2 + 10), alive_color, pygameSurface)
+        drawText(u"Håll start: huvudmenyn", 20, (SCREEN_WIDTH / 2,
+                 SCREEN_HEIGHT / 2 + 20), alive_color, pygameSurface)
         while True:
             if inputModule.takeStartInput():
                 s_pressed_time += 1.0/30.0
                 if s_pressed_time > 0.5:
                     pygame.draw.circle(
-                        pygameSurface, BACKGROUND_COLOR, (SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 50), 20)
+                        pygameSurface, BACKGROUND_COLOR, (SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 100), 40)
                     pygame.draw.circle(
-                        pygameSurface, FIELD_COLOR, (SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 50), 19)
+                        pygameSurface, FIELD_COLOR, (SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 100), 39)
                     pygame.draw.circle(pygameSurface, BACKGROUND_COLOR, (
-                        SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 50), int(19.0*(s_pressed_time/5.0)))
+                        SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 100), int(39.9*(s_pressed_time/5.0)))
             elif s_pressed_time > 0.001:
                 break
             if s_pressed_time > 5.0:

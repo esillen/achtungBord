@@ -14,9 +14,9 @@ pygame.init()
 pygame.mouse.set_visible(False)
 
 fpsClock = pygame.time.Clock()
-readyFont = pygame.font.Font('freesansbold.ttf', 25)
-spelaFont = pygame.font.Font('freesansbold.ttf', 50)
-logoFont = pygame.font.Font('freesansbold.ttf', 200)
+readyFont = pygame.font.Font('freesansbold.ttf', 50)
+spelaFont = pygame.font.Font('freesansbold.ttf', 100)
+logoFont = pygame.font.Font('freesansbold.ttf', 400)
 
 if USE_FULL_SCREEN:
     windowSurfaceObj = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
@@ -47,7 +47,7 @@ def gameCost():
 def displayReadyText(playerId):
     centerx = 0
     centery = 0
-    marginh = 20
+    marginh = 40
     if player.playerId < 4: 
         centerx = (3 + player.playerId * 4) * SCREEN_WIDTH / 18
         centery = SCREEN_HEIGHT - marginh
@@ -107,6 +107,7 @@ while True:
             #Start the game!
             #credits-=gameCost()
             break #Break here to reach the game loop!
+        
 
         pygame.display.update()
         fpsClock.tick(GAME_FPS)
