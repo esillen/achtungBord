@@ -13,8 +13,8 @@ if USE_GPIO_INPUT:
 else:
     import keyboardInputModule as inputModule
 
-hmargin = 300
-wmargin = 100
+hmargin = 55
+wmargin = 55
 fieldCornerRadius = 30
 directionLineLen = SNAKE_SIZE*3
 holeSize = 10  # Number of updates during a hole
@@ -42,23 +42,14 @@ def gameLoop(players, pygameSurface):
     global hmargin, wmargin
 
     if len(players) == 2:
-        hmargin = int((1.0/4.0)*SCREEN_HEIGHT)
-        wmargin = int((SCREEN_WIDTH-((SCREEN_HEIGHT-2.0*hmargin)))/2.0)
+        hmargin = 100
+        wmargin = 300
     elif len(players) == 3:
-        hmargin = int((1.0/4.0)*SCREEN_HEIGHT)
-        wmargin = int((1.0/4.0)*SCREEN_WIDTH)
-    elif len(players) == 4:
         hmargin = 55
-        wmargin = int((1.0/4.0)*SCREEN_WIDTH)
-    elif len(players) == 5:
+        wmargin = 240
+    else :
         hmargin = 55
-        wmargin = int((1.0/6.0)*SCREEN_WIDTH)
-    elif len(players) == 6:
-        hmargin = 55
-        wmargin = int((1.0/8.0)*SCREEN_WIDTH)
-    else:
-        hmargin = 55
-        wmargin = 50
+        wmargin = 55
 
     # Start game loop!!
 
