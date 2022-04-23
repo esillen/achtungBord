@@ -2,7 +2,7 @@
 import pygame
 import time
 from pygame.locals import *
-from settings import FIELD_COLOR, SCREEN_WIDTH, SNAKE_COLORS
+from settings import FIELD_COLOR, SCREEN_WIDTH, SNAKE_COLORS, TIME_UNTIL_SCORE_SCREEN_TIMEOUT_SECONDS
 
 margin = 100
 
@@ -21,7 +21,11 @@ def scoreScreen(players, pygameSurface, inputModule):
         pygameSurface.blit(textSurf, textRect)
         i += 1
     pygame.display.update()
-    time.sleep(2)
+    time.sleep(2) # So no-one accidentally keeps the button pressed
+    start_of_wait_time = time.time()
     while True:
+        if time.time() - start_of_wait_time > TIME_UNTIL_SCORE_SCREEN_TIMEOUT_SECONDS:
+            return
+        pygame.event.pump()
         if inputModule.takeStartInput():
             return

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import pygame
 
-# All mentions of "time" mean 1 tick of the clock (30 fps)
+# All mentions of "time" without unit mean 1 tick of the clock (nice values for 30 fps)
 
 # General
 MAX_NUM_PLAYERS = 4 # Currently only works well with 4 and 8 max players
@@ -44,3 +44,6 @@ SNAKE_COLORS = (pygame.Color(255, 255, 0), # yellow
 
 BACKGROUND_COLOR = pygame.Color(255, 153, 204) # light pink
 FIELD_COLOR = pygame.Color(0, 0, 0) # black
+
+# Misc
+TIME_UNTIL_SCORE_SCREEN_TIMEOUT_SECONDS = 15
