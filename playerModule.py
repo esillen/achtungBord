@@ -56,8 +56,8 @@ class Player:
         angle = random.uniform(0, 2*math.pi)
         self.currentAngle = math.degrees(random.uniform(0, 2*math.pi))
         self.currentDirection = (math.cos(angle), math.sin(angle))
-        hmargin = FIELD_HEIGHT_MARGINS[num_players]
-        wmargin = FIELD_WIDTH_MARGINS[num_players]
+        hmargin = FIELD_HEIGHT_MARGINS[num_players - 1]
+        wmargin = FIELD_WIDTH_MARGINS[num_players - 1]
         x = random.uniform(wmargin * 1.1 + 30, SCREEN_WIDTH - wmargin * 1.1 - 30)
         y = random.uniform(hmargin * 1.1 + 30, SCREEN_HEIGHT - hmargin * 1.1 - 30)
         self.pos = [x, y]

@@ -11,7 +11,7 @@ GAME_FPS = 30
 USE_GPIO_INPUT = False
 
 # Screen
-USE_FULL_SCREEN = False
+USE_FULL_SCREEN = True
 SCREEN_HEIGHT = 1080 # Don't change this :)
 SCREEN_WIDTH = 1920 # Don't change this :)
 PHYSICAL_SCREEN_MODE = "TABLE" # "TABLE" or "UPRIGHT". Decides where to draw player texts
@@ -19,8 +19,8 @@ PHYSICAL_SCREEN_MODE = "TABLE" # "TABLE" or "UPRIGHT". Decides where to draw pla
 # Playing field
 PLAY_FIELD_RADIUS = (SCREEN_WIDTH // 2) - 20
 FIELD_CORNER_RADIUS = 30
-FIELD_HEIGHT_MARGINS = (100, 100, 55, 55, 55, 55, 55, 55) # Margins per number of players
-FIELD_WIDTH_MARGINS = (300, 300, 240, 55, 55, 55, 55, 55)
+FIELD_HEIGHT_MARGINS = (150, 150, 100, 60, 60, 60, 60, 60) # Margins per number of players
+FIELD_WIDTH_MARGINS = (300, 300, 240, 140, 100, 60, 60, 60)
 
 # Gameplay settings
 ANGLE_SPEED = 4.5
@@ -49,6 +49,7 @@ BACKGROUND_COLOR = pygame.Color(255, 153, 204) # light pink
 FIELD_COLOR = pygame.Color(0, 0, 0) # black
 
 # Text poses (x, y, angle_degrees)
+# Poses are different for table and upright
 READY_TEXT_UPRIGHT_POSES = ((384, 900, 0),
                             (768, 900, 0),
                             (1152, 900, 0),
@@ -57,14 +58,14 @@ READY_TEXT_UPRIGHT_POSES = ((384, 900, 0),
                             (768, 120, 0),
                             (1152, 120, 0),
                             (1536, 120, 0))
-READY_TEXT_TABLE_POSES = ((960, 900, 0),
-                          (1800, 900, 45),
-                          (1800, 540, 90),
+READY_TEXT_TABLE_POSES = ((960, 960, 0),
+                          (1800, 940, 45),
+                          (1820, 540, 90),
                           (1800, 120, 135),
-                          (960, 120, 180),
+                          (960, 100, 180),
                           (120, 120, 225),
-                          (120, 540, 270),
-                          (120, 900, 315))
+                          (100, 540, 270),
+                          (120, 940, 315))
 
 SCORE_TEXT_UPRIGHT_POSES = ((384, 1050, 0),
                             (768, 1050, 0),

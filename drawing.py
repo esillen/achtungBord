@@ -23,8 +23,8 @@ def drawReadyText(playerId, surface):
 
 
 def drawField(num_players, surface):
-    hmargin = FIELD_HEIGHT_MARGINS[num_players]
-    wmargin = FIELD_WIDTH_MARGINS[num_players]
+    hmargin = FIELD_HEIGHT_MARGINS[num_players - 1]
+    wmargin = FIELD_WIDTH_MARGINS[num_players - 1]
 
     # Big surface
     pygame.draw.rect(surface, FIELD_COLOR, pygame.Rect(wmargin+FIELD_CORNER_RADIUS, hmargin+FIELD_CORNER_RADIUS,

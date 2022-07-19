@@ -4,7 +4,7 @@ import time
 from pygame.locals import *
 from settings import FIELD_COLOR, SCREEN_WIDTH, SNAKE_COLORS, TIME_UNTIL_SCORE_SCREEN_TIMEOUT_SECONDS
 
-margin = 200
+margin = 125
 
 
 def scoreScreen(players, pygameSurface, inputModule):
@@ -12,10 +12,13 @@ def scoreScreen(players, pygameSurface, inputModule):
     pygameSurface.fill(FIELD_COLOR)
     i = 0
     players.sort()
-    for player in players:
+    for (position, player) in enumerate(players):
         # display score under each other
-        textSurf = font.render("Spelare " + str(player.playerId + 1) + ": " + str(
-            player.score), True, SNAKE_COLORS[player.playerId], FIELD_COLOR)
+        if position == 0:
+            text = f"BÄST! >>> Spelare {player.playerId + 1}: {player.score} poäng <<<!!!!!!"
+        else:
+            text = f"Spelare {player.playerId + 1}: {player.score} poäng"
+        textSurf = font.render(text, True, SNAKE_COLORS[player.playerId], FIELD_COLOR)
         textRect = textSurf.get_rect()
         textRect.center = (SCREEN_WIDTH/2, margin+margin*i)
         pygameSurface.blit(textSurf, textRect)
