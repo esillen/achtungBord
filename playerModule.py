@@ -3,7 +3,8 @@ import math
 import random
 import achtungGame as game
 from settings import ANGLE_SPEED, FIELD_COLOR, HOLE_SIZE, FORWARD_SPEED, HOLE_TIMER_MAX, \
-    HOLE_TIMER_MIN, PLAY_FIELD_RADIUS, SNAKE_SIZE, SPAWN_MARGIN, SCREEN_HEIGHT, SCREEN_WIDTH
+    HOLE_TIMER_MIN, PLAY_FIELD_RADIUS, SNAKE_SIZE, SPAWN_MARGIN, SCREEN_HEIGHT, SCREEN_WIDTH, \
+    FIELD_HEIGHT_MARGINS, FIELD_WIDTH_MARGINS
 # TODO: will this give the same spawn points all the time?
 
 
@@ -49,15 +50,16 @@ class Player:
         self.holeTimer = 0
         self.nextHole = random.randint(HOLE_TIMER_MIN, HOLE_TIMER_MAX)
 
-    def resetRandomize(self):
+    def resetRandomize(self, num_players):
         self.resetHoleTimer()
         radii = random.uniform(0, PLAY_FIELD_RADIUS-SPAWN_MARGIN)
         angle = random.uniform(0, 2*math.pi)
         self.currentAngle = math.degrees(random.uniform(0, 2*math.pi))
         self.currentDirection = (math.cos(angle), math.sin(angle))
-        x = random.uniform(game.wmargin*1.1, SCREEN_WIDTH-game.wmargin*1.1)
-        y = random.uniform(
-            game.hmargin*1.1, SCREEN_HEIGHT-game.hmargin*1.1)
+        hmargin = FIELD_HEIGHT_MARGINS[num_players]
+        wmargin = FIELD_WIDTH_MARGINS[num_players]
+        x = random.uniform(wmargin * 1.1 + 30, SCREEN_WIDTH - wmargin * 1.1 - 30)
+        y = random.uniform(hmargin * 1.1 + 30, SCREEN_HEIGHT - hmargin * 1.1 - 30)
         self.pos = [x, y]
         self.alive = True
 

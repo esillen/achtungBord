@@ -8,22 +8,25 @@ MAX_NUM_PLAYERS = 4 # Currently only works well with 4 and 8 max players
 GAME_FPS = 30
 
 # Input
-USE_GPIO_INPUT = True
+USE_GPIO_INPUT = False
 
 # Screen
-USE_FULL_SCREEN = True
-SCREEN_HEIGHT = 1080
-SCREEN_WIDTH = 1920
+USE_FULL_SCREEN = False
+SCREEN_HEIGHT = 1080 # Don't change this :)
+SCREEN_WIDTH = 1920 # Don't change this :)
+PHYSICAL_SCREEN_MODE = "TABLE" # "TABLE" or "UPRIGHT". Decides where to draw player texts
 
 # Playing field
 PLAY_FIELD_RADIUS = (SCREEN_WIDTH // 2) - 20
 FIELD_CORNER_RADIUS = 30
+FIELD_HEIGHT_MARGINS = (100, 100, 55, 55, 55, 55, 55, 55) # Margins per number of players
+FIELD_WIDTH_MARGINS = (300, 300, 240, 55, 55, 55, 55, 55)
 
 # Gameplay settings
 ANGLE_SPEED = 4.5
 FORWARD_SPEED = 5.0
-HOLE_TIMER_MIN = 50
-HOLE_TIMER_MAX = 150
+HOLE_TIMER_MIN = 40
+HOLE_TIMER_MAX = 100
 SPAWN_MARGIN = 30
 SNAKE_SIZE = 5 # Should be an odd number or weird things happen
 HOLE_SIZE = 10 # Number of updates during a hole
@@ -44,6 +47,41 @@ SNAKE_COLORS = (pygame.Color(255, 255, 0), # yellow
 
 BACKGROUND_COLOR = pygame.Color(255, 153, 204) # light pink
 FIELD_COLOR = pygame.Color(0, 0, 0) # black
+
+# Text poses (x, y, angle_degrees)
+READY_TEXT_UPRIGHT_POSES = ((384, 900, 0),
+                            (768, 900, 0),
+                            (1152, 900, 0),
+                            (1536, 900, 0),
+                            (384, 120, 0),
+                            (768, 120, 0),
+                            (1152, 120, 0),
+                            (1536, 120, 0))
+READY_TEXT_TABLE_POSES = ((960, 900, 0),
+                          (1800, 900, 45),
+                          (1800, 540, 90),
+                          (1800, 120, 135),
+                          (960, 120, 180),
+                          (120, 120, 225),
+                          (120, 540, 270),
+                          (120, 900, 315))
+
+SCORE_TEXT_UPRIGHT_POSES = ((384, 1050, 0),
+                            (768, 1050, 0),
+                            (1152, 1050, 0),
+                            (1536, 1050, 0),
+                            (384, 30, 0),
+                            (768, 30, 0),
+                            (1152, 30, 0),
+                            (1536, 30, 0))
+SCORE_TEXT_TABLE_POSES = ((960, 1050, 0),
+                          (1890, 1050, 45),
+                          (1890, 540, 90),
+                          (1890, 30, 135),
+                          (960, 30, 180),
+                          (30, 30, 225),
+                          (30, 540, 270),
+                          (30, 1050, 315))
 
 # Misc
 TIME_UNTIL_SCORE_SCREEN_TIMEOUT_SECONDS = 15
