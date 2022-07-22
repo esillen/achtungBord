@@ -50,7 +50,6 @@ def drawField(num_players, surface):
 
 
 def drawInGameScores(players, surface):
-    text_margin_h = 27
     circle_radius = 25
     for player in players:
 

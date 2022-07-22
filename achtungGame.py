@@ -3,7 +3,6 @@
 import pygame
 import sys
 import playerModule
-import scoreScreen
 import drawing
 from pygame.locals import *
 
@@ -124,7 +123,6 @@ def gameLoop(players, pygameSurface):
             elif s_pressed_time > 0.001:
                 break
             if s_pressed_time > 5.0:
-                scoreScreen.scoreScreen(players, pygameSurface, inputModule)
                 return
             # fancy artsy stuff happen here
             pygame.display.update()
@@ -132,8 +130,7 @@ def gameLoop(players, pygameSurface):
             fpsClock.tick(GAME_FPS)
             check_exit_event()
         for player in players:
-            if player.score >= len(players) * 10 - 10:
-                scoreScreen.scoreScreen(players, pygameSurface, inputModule)
+            if player.score >= len(players) * 10 - 10: # Victory condition satisfied
                 return
 
 

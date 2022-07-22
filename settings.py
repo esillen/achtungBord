@@ -6,6 +6,7 @@ import pygame
 # General
 MAX_NUM_PLAYERS = 4 # Currently only works well with 4 and 8 max players
 GAME_FPS = 30
+DISPLAY_AD_SCREEN = False
 
 # Input
 USE_GPIO_INPUT = False
@@ -86,3 +87,4 @@ SCORE_TEXT_TABLE_POSES = ((960, 1050, 0),
 
 # Misc
 TIME_UNTIL_SCORE_SCREEN_TIMEOUT_SECONDS = 15
+TIME_UNTIL_AD_SCREEN_TIMEOUT_SECONDS = 60
