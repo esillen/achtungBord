@@ -6,7 +6,7 @@ import pygame
 # General
 MAX_NUM_PLAYERS = 4 # Currently only works well with 4 and 8 max players
 GAME_FPS = 30
-DISPLAY_AD_SCREEN = False
+DISPLAY_AD_SCREEN = True
 
 # Input
 USE_GPIO_INPUT = False

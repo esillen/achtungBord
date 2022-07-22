@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 import pygame
-pygame.init() # To initialize fonts etc.
-
 import sys
 import achtungGame as game
 import drawing
@@ -10,10 +8,13 @@ import adScreen
 from settings import SNAKE_COLORS, USE_FULL_SCREEN, USE_GPIO_INPUT, SCREEN_HEIGHT, SCREEN_WIDTH, GAME_FPS, DISPLAY_AD_SCREEN
 from pygame.locals import *
 
+
 if USE_GPIO_INPUT:
     import gpioInputModule as inputModule
 else:
     import keyboardInputModule as inputModule
+
+pygame.init()
 
 pygame.mouse.set_visible(False)
 
@@ -105,4 +106,4 @@ while True:
     scoreScreen.scoreScreen(players, windowSurfaceObj, inputModule)
     # Ad screen
     if DISPLAY_AD_SCREEN:
-        adScreen.adSreen(windowSurfaceObj, inputModule)
+        adScreen.adScreen(windowSurfaceObj, inputModule)
