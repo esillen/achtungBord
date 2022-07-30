@@ -12,7 +12,7 @@ DISPLAY_AD_SCREEN = True
 USE_GPIO_INPUT = False
 
 # Screen
-USE_FULL_SCREEN = True
+USE_FULL_SCREEN = False
 SCREEN_HEIGHT = 1080 # Don't change this :)
 SCREEN_WIDTH = 1920 # Don't change this :)
 PHYSICAL_SCREEN_MODE = "TABLE" # "TABLE" or "UPRIGHT". Decides where to draw player texts
@@ -27,10 +27,11 @@ FIELD_WIDTH_MARGINS = (300, 300, 240, 140, 100, 60, 60, 60)
 ANGLE_SPEED = 4.5
 FORWARD_SPEED = 5.0
 HOLE_TIMER_MIN = 40
-HOLE_TIMER_MAX = 100
+HOLE_TIMER_MAX = 140
 SPAWN_MARGIN = 30
 SNAKE_SIZE = 5 # Should be an odd number or weird things happen
-HOLE_SIZE = 10 # Number of updates during a hole
+MIN_HOLE_SIZE = 4 # Number of updates during a hole
+MAX_HOLE_SIZE = 10
 
 # Spawn settings
 BLINK_TIME = 10
