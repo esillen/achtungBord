@@ -2,7 +2,7 @@
 import math
 import random
 import achtungGame as game
-from settings import ANGLE_SPEED, FIELD_COLOR, HOLE_SIZE, FORWARD_SPEED, HOLE_TIMER_MAX, \
+from settings import ANGLE_SPEED, FIELD_COLOR, MIN_HOLE_SIZE, MAX_HOLE_SIZE, FORWARD_SPEED, HOLE_TIMER_MAX, \
     HOLE_TIMER_MIN, PLAY_FIELD_RADIUS, SNAKE_SIZE, SPAWN_MARGIN, SCREEN_HEIGHT, SCREEN_WIDTH, \
     FIELD_HEIGHT_MARGINS, FIELD_WIDTH_MARGINS
 # TODO: will this give the same spawn points all the time?
@@ -21,6 +21,7 @@ class Player:
         self.nextHole = 0
         self.holeTimer = 0
         self.score = 0
+        self.holeSize = 0
 
     # Wtf
     def __lt__(self, other):
@@ -39,7 +40,8 @@ class Player:
         if self.makingHole == False and self.holeTimer > self.nextHole:
             self.makingHole = True
             self.holeTimer = 0
-        elif self.makingHole and self.holeTimer > HOLE_SIZE:
+            self.holeSize = random.randint(MIN_HOLE_SIZE, MAX_HOLE_SIZE)
+        elif self.makingHole and self.holeTimer > self.holeSize:
             self.resetHoleTimer()
         # TODO: perhaps return a bunch of positions to make a smooth line? or perhaps pygame.draw.arc!
         self.pos[0] = self.pos[0]+FORWARD_SPEED*self.currentDirection[0]
