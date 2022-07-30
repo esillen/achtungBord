@@ -18,9 +18,6 @@ else:
 pygame.mouse.set_visible(False)
 
 fpsClock = pygame.time.Clock()
-infoFont = pygame.font.Font('freesansbold.ttf', 50)
-spelaFont = pygame.font.Font('freesansbold.ttf', 100)
-logoFont = pygame.font.Font('freesansbold.ttf', 400)
 
 if USE_FULL_SCREEN:
     windowSurfaceObj = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
@@ -51,17 +48,20 @@ def gameCost():
 def displayInfo():
     #creditText = "Riksdaler: " + str(credits)
     creditText = u"Spelet är gratis!"
-    drawing.drawRotatedText(creditText, infoFont, pygame.Color(0, 255, 255), 0, (SCREEN_WIDTH/2, SCREEN_HEIGHT/2), windowSurfaceObj)
+    drawing.drawRotatedText(creditText, 50, pygame.Color(0, 255, 255), 0, (SCREEN_WIDTH / 2, 3 * SCREEN_HEIGHT / 4), windowSurfaceObj)
     if playersReady()>=2:
-        #drawing.drawRotatedText('spel: '+str(gameCost())+' Riksdaler',infoFont,pygame.Color(0,255,0),0,(SCREEN_WIDTH/2,SCREEN_HEIGHT/2+50), windowSurfaceObj)
-        drawing.drawRotatedText(str(playersReady()) + u' spelare är redo!', infoFont,pygame.Color(0,255,0),0,(SCREEN_WIDTH/2,SCREEN_HEIGHT/2+50), windowSurfaceObj)
+        #drawing.drawRotatedText('spel: '+str(gameCost())+' Riksdaler',50,pygame.Color(0,255,0),0,(SCREEN_WIDTH/2,SCREEN_HEIGHT/2+50), windowSurfaceObj)
+        drawing.drawRotatedText(str(playersReady()) + u' spelare är redo!', 50, pygame.Color(0,255,0),0,(SCREEN_WIDTH/2,SCREEN_HEIGHT/2+50), windowSurfaceObj)
 
-        drawing.drawRotatedText(u'Poäng för att vinna: ' + str(playersReady()*10-10), infoFont,pygame.Color(120,0,255), 0, (SCREEN_WIDTH/2,SCREEN_HEIGHT/2+100), windowSurfaceObj)
+        drawing.drawRotatedText(u'Poäng för att vinna: ' + str(playersReady()*10-10), 50, pygame.Color(120,0,255), 0, (SCREEN_WIDTH/2,SCREEN_HEIGHT/2+100), windowSurfaceObj)
 
 
 def displayTextAndLogo():
-    drawing.drawRotatedText('spela',spelaFont,pygame.Color(255,0,255),45,(SCREEN_WIDTH/4,SCREEN_HEIGHT/4), windowSurfaceObj)
-    drawing.drawRotatedText('ACHTUNG!',spelaFont,pygame.Color(255,50,20),0,(SCREEN_WIDTH/2,SCREEN_HEIGHT/3), windowSurfaceObj)
+    drawing.drawRotatedText('spela',100,pygame.Color(255,0,255), 45, (600, 240), windowSurfaceObj)
+    drawing.drawRotatedText('ACHTUNG',100,pygame.Color(255,50,20), 0, (960, 280), windowSurfaceObj)
+    drawing.drawRotatedText('DIE',50,pygame.Color(200,200,200), 15, (960, 360), windowSurfaceObj)
+    drawing.drawRotatedText('KURVE!',100,pygame.Color(255,50,20), 0, (960, 450), windowSurfaceObj)
+    drawing.drawRotatedText('Tryck på vänster knapp för att bli redo!', 20, pygame.Color(150,150,150), 0, (960, 880), windowSurfaceObj)
 
 
 def check_exit_event():

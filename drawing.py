@@ -1,11 +1,6 @@
 import pygame
 from settings import BACKGROUND_COLOR, FIELD_COLOR, SNAKE_COLORS, SCREEN_HEIGHT, SCREEN_WIDTH, FIELD_CORNER_RADIUS, FIELD_HEIGHT_MARGINS, FIELD_WIDTH_MARGINS, READY_TEXT_UPRIGHT_POSES, READY_TEXT_TABLE_POSES, SCORE_TEXT_UPRIGHT_POSES, SCORE_TEXT_TABLE_POSES, PHYSICAL_SCREEN_MODE
 
-
-__readyFont = pygame.font.Font('freesansbold.ttf', 50)
-__scoreFont = pygame.font.Font('freesansbold.ttf', 25)
-
-
 def drawReadyText(playerId, surface):
     color = SNAKE_COLORS[playerId]
     if PHYSICAL_SCREEN_MODE == "UPRIGHT":
@@ -19,7 +14,7 @@ def drawReadyText(playerId, surface):
     else:
         raise Exception("Oh no! Bad screen mode.")
 
-    drawRotatedText('Redo!', __readyFont, color, angle, (centerx, centery), surface)
+    drawRotatedText('Redo!', 50, color, angle, (centerx, centery), surface)
 
 
 def drawField(num_players, surface):
@@ -66,7 +61,7 @@ def drawInGameScores(players, surface):
             raise Exception("Oh no! Bad screen mode.")
 
         pygame.draw.circle(surface, (0, 0, 0), (centerx, centery), circle_radius)
-        drawRotatedText(str(player.score), __scoreFont, color, angle, (centerx, centery), surface)
+        drawRotatedText(str(player.score), 25, color, angle, (centerx, centery), surface)
 
 
 
@@ -77,7 +72,8 @@ def drawText(text, size, pos, color, surface):
     textRect.center = (pos[0], pos[1])
     surface.blit(s_textSurf, textRect)
 
-def drawRotatedText(text, font, color, angle, center, surface):
+def drawRotatedText(text, size, color, angle, center, surface):
+    font = pygame.font.Font('freesansbold.ttf', size)
     readyTextObj = font.render(text, False, color)
     rotatedSurf = pygame.transform.rotate(readyTextObj, angle)
     rotatedRect = rotatedSurf.get_rect()
