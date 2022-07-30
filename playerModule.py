@@ -60,8 +60,8 @@ class Player:
         self.currentDirection = (math.cos(angle), math.sin(angle))
         hmargin = FIELD_HEIGHT_MARGINS[num_players - 1]
         wmargin = FIELD_WIDTH_MARGINS[num_players - 1]
-        x = random.uniform(wmargin * 1.1 + 30, SCREEN_WIDTH - wmargin * 1.1 - 30)
-        y = random.uniform(hmargin * 1.1 + 30, SCREEN_HEIGHT - hmargin * 1.1 - 30)
+        x = random.uniform(wmargin * 1.1 + 70, SCREEN_WIDTH - wmargin * 1.1 - 70)
+        y = random.uniform(hmargin * 1.1 + 70, SCREEN_HEIGHT - hmargin * 1.1 - 70)
         self.pos = [x, y]
         self.alive = True
 
