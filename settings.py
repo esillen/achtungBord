@@ -9,10 +9,10 @@ GAME_FPS = 30
 DISPLAY_AD_SCREEN = True
 
 # Input
-USE_GPIO_INPUT = True
+USE_GPIO_INPUT = False
 
 # Screen
-USE_FULL_SCREEN = True
+USE_FULL_SCREEN = False
 SCREEN_HEIGHT = 1080 # Don't change this :)
 SCREEN_WIDTH = 1920 # Don't change this :)
 PHYSICAL_SCREEN_MODE = "TABLE" # "TABLE" or "UPRIGHT". Decides where to draw player texts

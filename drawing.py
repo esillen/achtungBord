@@ -1,20 +1,13 @@
 import pygame
 from settings import BACKGROUND_COLOR, FIELD_COLOR, SNAKE_COLORS, SCREEN_HEIGHT, SCREEN_WIDTH, FIELD_CORNER_RADIUS, FIELD_HEIGHT_MARGINS, FIELD_WIDTH_MARGINS, READY_TEXT_UPRIGHT_POSES, READY_TEXT_TABLE_POSES, SCORE_TEXT_UPRIGHT_POSES, SCORE_TEXT_TABLE_POSES, PHYSICAL_SCREEN_MODE
 
-<<<<<<< HEAD
 pygame.font.init()
-
-__readyFont = pygame.font.Font('freesansbold.ttf', 50)
-__scoreFont = pygame.font.Font('freesansbold.ttf', 25)
-
 
 def drawImage(source, position, size, surface):
     image = pygame.image.load(source)
     image = pygame.transform.scale(image, size)
     surface.blit(image, position)
 
-=======
->>>>>>> master
 def drawReadyText(playerId, surface):
     color = SNAKE_COLORS[playerId]
     if PHYSICAL_SCREEN_MODE == "UPRIGHT":
