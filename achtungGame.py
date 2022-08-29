@@ -7,7 +7,7 @@ import drawing
 from pygame.locals import *
 
 from settings import BACKGROUND_COLOR, FIELD_COLOR, USE_GPIO_INPUT, SNAKE_COLORS, SCREEN_HEIGHT, \
-    SCREEN_WIDTH, SNAKE_SIZE, BLINK_TIME, GAME_FPS
+    SCREEN_WIDTH, SNAKE_SIZE, BLINK_TIME, SPAWN_TIME, GAME_FPS
 if USE_GPIO_INPUT:
     import gpioInputModule as inputModule
 else:
@@ -33,6 +33,78 @@ def check_exit_event():
             pygame.quit()
             sys.exit()
 
+def spawnPlayers(players, pygameSurface):
+    spawnedPlayers = []
+    for player in players:
+        player.resetRandomize(len(players))
+        spawnedPlayers.append(player)
+        # Take this much time for this player, and additional time for the last player
+        delayTime = BLINK_TIME
+        if len(spawnedPlayers) == len(players):
+            delayTime = BLINK_TIME + 15
+        for i in range(delayTime):
+            # TODO: add some delay between spawns
+            drawing.drawField(len(players), pygameSurface)
+            for player in spawnedPlayers:
+                player.updateDirection(
+                    inputModule.takeInput(player.playerId))
+                tempPlayerPos = player.getRoundedPos()
+                pygame.draw.circle(
+                    pygameSurface, (player.color), tempPlayerPos, SNAKE_SIZE)
+                pygame.draw.aaline(pygameSurface, (player.color), tempPlayerPos, (
+                    tempPlayerPos[0] + player.currentDirection[0]*directionLineLen, tempPlayerPos[1] + player.currentDirection[1]*directionLineLen), 1)
+            pygame.display.update()
+            fpsClock.tick(GAME_FPS)
+            pygame.event.pump()
+            check_exit_event()
+
+def spawnPlayers2(players, pygameSurface):
+    for player in players:
+        player.resetRandomize(len(players))
+    for time_tick in range(SPAWN_TIME * GAME_FPS):
+        pygameSurface.fill(BACKGROUND_COLOR)
+        drawing.drawField(len(players), pygameSurface)
+        
+        time_tick_fraction = time_tick / (SPAWN_TIME * GAME_FPS)
+        for player in players:
+            player.updateDirection(
+                inputModule.takeInput(player.playerId))
+            tempPlayerPos = player.getRoundedPos()
+            drawing.drawSpawnPositionHelperLine(player, time_tick_fraction, pygameSurface)
+            pygame.draw.circle(
+                pygameSurface, (player.color), tempPlayerPos, SNAKE_SIZE)
+            pygame.draw.aaline(pygameSurface, (player.color), tempPlayerPos, (
+                tempPlayerPos[0] + player.currentDirection[0]*directionLineLen, tempPlayerPos[1] + player.currentDirection[1]*directionLineLen), 1)
+        
+        drawing.drawInGameScores(players, pygameSurface)
+        pygame.display.update()
+        fpsClock.tick(GAME_FPS)
+        pygame.event.pump()
+        check_exit_event()
+    
+
+def updateKurves(players, pygameSurface):
+    for player in players:
+        if player.alive:
+            player.updateDirection(
+                inputModule.takeInput(player.playerId))
+            player.checkCollission(pygameSurface)
+            # maybe skip this test! (perhaps looks better)
+            if player.alive:
+                if player.makingHole:
+                    pygame.draw.circle(pygameSurface, (pygame.Color(
+                        0, 0, 0)), player.getRoundedPos(), SNAKE_SIZE)
+                player.updatePos()
+                pygame.draw.circle(
+                    pygameSurface, (player.color), player.getRoundedPos(), SNAKE_SIZE)
+            else:
+                updateScores(players)
+                drawing.drawInGameScores(players, pygameSurface)
+    pygame.display.update()
+    pygame.event.pump()
+    fpsClock.tick(GAME_FPS)
+    check_exit_event()
+
 # Players is a list of player objects
 def gameLoop(players, pygameSurface):
  
@@ -42,63 +114,26 @@ def gameLoop(players, pygameSurface):
         drawing.drawField(len(players), pygameSurface)
         drawing.drawInGameScores(players, pygameSurface)
         pygame.display.update()
-        # spawn players and let them choose their directions
-        spawnedPlayers = []
-        for player in players:
-            player.resetRandomize(len(players))
-            spawnedPlayers.append(player)
-            # Take this much time for this player, and additional time for the last player
-            delayTime = BLINK_TIME
-            if len(spawnedPlayers) == len(players):
-                delayTime = BLINK_TIME + 15
-            for i in range(delayTime):
-                # TODO: add some delay between spawns
-                drawing.drawField(len(players), pygameSurface)
-                for player in spawnedPlayers:
-                    player.updateDirection(
-                        inputModule.takeInput(player.playerId))
-                    tempPlayerPos = player.getRoundedPos()
-                    pygame.draw.circle(
-                        pygameSurface, (player.color), tempPlayerPos, SNAKE_SIZE)
-                    pygame.draw.aaline(pygameSurface, (player.color), tempPlayerPos, (
-                        tempPlayerPos[0] + player.currentDirection[0]*directionLineLen, tempPlayerPos[1] + player.currentDirection[1]*directionLineLen), 1)
-                pygame.display.update()
-                fpsClock.tick(GAME_FPS)
-                pygame.event.pump()
-                check_exit_event()
-        # So that we don't collide in our line
+
+        spawnPlayers2(players, pygameSurface)
+
+        pygameSurface.fill(BACKGROUND_COLOR)
         drawing.drawField(len(players), pygameSurface)
+        drawing.drawInGameScores(players, pygameSurface)
+        
+        # So that we don't collide in our line
         for player in players:
             player.updateDirection(inputModule.takeInput(player.playerId))
             tempPlayerPos = player.getRoundedPos()
             pygame.draw.circle(pygameSurface, (player.color),
                                tempPlayerPos, SNAKE_SIZE)
-        # wait a little and let the last player choose direction
+
         # gogoog!!!!! :D:D:D:D:D
-        while playersStillAlive(players) > 1:
-            # updateKurves
-            for player in players:
-                if player.alive:
-                    player.updateDirection(
-                        inputModule.takeInput(player.playerId))
-                    player.checkCollission(pygameSurface)
-                    # maybe skip this test! (perhaps looks better)
-                    if player.alive:
-                        if player.makingHole:
-                            pygame.draw.circle(pygameSurface, (pygame.Color(
-                                0, 0, 0)), player.getRoundedPos(), SNAKE_SIZE)
-                        player.updatePos()
-                        pygame.draw.circle(
-                            pygameSurface, (player.color), player.getRoundedPos(), SNAKE_SIZE)
-                    else:
-                        updateScores(players)
-                        drawing.drawInGameScores(players, pygameSurface)
-            pygame.display.update()
-            pygame.event.pump()
-            fpsClock.tick(GAME_FPS)
-            check_exit_event()
+        while countPlayersStillAlive(players) > 1:
+            updateKurves(players, pygameSurface)
+
         # ONLY ONE SURVIVOR HERE! (ROUND IS OVER)
-        alive_color = players[0].color # Fallback if all dies simultaneously
+        alive_color = BACKGROUND_COLOR # Fallback if all dies simultaneously
         for player in players:
             if player.alive:
                 alive_color = player.color
@@ -134,7 +169,7 @@ def gameLoop(players, pygameSurface):
                 return
 
 
-def playersStillAlive(players):
+def countPlayersStillAlive(players):
     alive = 0
     for player in players:
         if player.alive:

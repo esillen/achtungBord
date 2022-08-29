@@ -35,6 +35,7 @@ MAX_HOLE_SIZE = 10
 
 # Spawn settings
 BLINK_TIME = 10
+SPAWN_TIME = 3
 DIRECTION_LINE_LENGTH = SNAKE_SIZE * 3
 
 # Colors
