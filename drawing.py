@@ -1,5 +1,6 @@
 import pygame
-from settings import BACKGROUND_COLOR, FIELD_COLOR, SNAKE_COLORS, SCREEN_HEIGHT, SCREEN_WIDTH, FIELD_CORNER_RADIUS, FIELD_HEIGHT_MARGINS, FIELD_WIDTH_MARGINS, READY_TEXT_UPRIGHT_POSES, READY_TEXT_TABLE_POSES, SCORE_TEXT_UPRIGHT_POSES, SCORE_TEXT_TABLE_POSES, PHYSICAL_SCREEN_MODE
+import math
+from settings import BACKGROUND_COLOR, FIELD_COLOR, SNAKE_COLORS, SNAKE_SIZE, SCREEN_HEIGHT, SCREEN_WIDTH, FIELD_CORNER_RADIUS, FIELD_HEIGHT_MARGINS, FIELD_WIDTH_MARGINS, READY_TEXT_UPRIGHT_POSES, READY_TEXT_TABLE_POSES, SCORE_TEXT_UPRIGHT_POSES, SCORE_TEXT_TABLE_POSES, PHYSICAL_SCREEN_MODE
 
 pygame.font.init()
 
@@ -87,3 +88,32 @@ def drawRotatedText(text, size, color, angle, center, surface):
     rotatedRect.center = center # (centerx,centery)
     surface.blit(rotatedSurf, rotatedRect)
     
+def drawSpawnPositionHelperLine(player, interpolationT, surface):
+    color = SNAKE_COLORS[player.playerId]
+    if PHYSICAL_SCREEN_MODE == "UPRIGHT":
+        centerx = SCORE_TEXT_UPRIGHT_POSES[player.playerId][0]
+        centery = SCORE_TEXT_UPRIGHT_POSES[player.playerId][1]
+        angle = SCORE_TEXT_UPRIGHT_POSES[player.playerId][2]
+    elif PHYSICAL_SCREEN_MODE == "TABLE":
+        centerx = SCORE_TEXT_TABLE_POSES[player.playerId][0]
+        centery = SCORE_TEXT_TABLE_POSES[player.playerId][1]
+        angle = SCORE_TEXT_TABLE_POSES[player.playerId][2]
+    else:
+        raise Exception("Oh no! Bad screen mode.")
+
+    player_pos = player.getRoundedPos()
+
+    pygame.draw.aaline(surface, (color), (centerx, centery), player_pos, 1)
+
+    #interpolated_x = centerx + (player_pos[0] - centerx) * interpolationT
+    #interpolated_y = centery + (player_pos[1] - centery) * interpolationT
+    #pygame.draw.line(surface, (color), (centerx, centery), (interpolated_x, interpolated_y), 3)
+    #pygame.draw.circle(surface, (color), (centerx, centery), 3)
+    #pygame.draw.circle(surface, (color), (interpolated_x, interpolated_y), 3)
+    rect_size = SNAKE_SIZE * 10
+    arcrect = pygame.Rect(0, 0, rect_size, rect_size).move(player_pos[0] - (rect_size / 2), player_pos[1] - (rect_size / 2))
+    pygame.draw.arc(surface, (color), arcrect, 0, interpolationT * math.pi * 2, SNAKE_SIZE)
+    if interpolationT > 0.05:
+        pygame.draw.arc(surface, (color), arcrect, math.pi * 2 * 0.05, interpolationT * math.pi * 2, SNAKE_SIZE)
+    if interpolationT > 0.1:
+        pygame.draw.arc(surface, (color), arcrect, math.pi * 2 * 0.1, interpolationT * math.pi * 2, SNAKE_SIZE)
