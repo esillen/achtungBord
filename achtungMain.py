@@ -7,13 +7,17 @@ import achtungGame as game
 import drawing
 import scoreScreen
 import adScreen
-from settings import SNAKE_COLORS, USE_FULL_SCREEN, USE_GPIO_INPUT, SCREEN_HEIGHT, SCREEN_WIDTH, GAME_FPS, DISPLAY_AD_SCREEN
+from settings import SNAKE_COLORS, USE_FULL_SCREEN, INPUT_MODULE, SCREEN_HEIGHT, SCREEN_WIDTH, GAME_FPS, DISPLAY_AD_SCREEN
 from pygame.locals import *
 
-if USE_GPIO_INPUT:
+if INPUT_MODULE == "GPIO":
     import gpioInputModule as inputModule
-else:
+elif INPUT_MODULE == "KEYBOARD":
     import keyboardInputModule as inputModule
+elif INPUT_MODULE == "JOYSTICK":
+    import joystickInputModule as inputModule
+else:
+    raise Exception("Bad input module")
 
 pygame.mouse.set_visible(False)
 

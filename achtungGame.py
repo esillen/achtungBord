@@ -6,12 +6,16 @@ import playerModule
 import drawing
 from pygame.locals import *
 
-from settings import BACKGROUND_COLOR, FIELD_COLOR, USE_GPIO_INPUT, SNAKE_COLORS, SCREEN_HEIGHT, \
+from settings import BACKGROUND_COLOR, FIELD_COLOR, INPUT_MODULE, SNAKE_COLORS, SCREEN_HEIGHT, \
     SCREEN_WIDTH, SNAKE_SIZE, BLINK_TIME, SPAWN_TIME, GAME_FPS
-if USE_GPIO_INPUT:
+if INPUT_MODULE == "GPIO":
     import gpioInputModule as inputModule
-else:
+elif INPUT_MODULE == "KEYBOARD":
     import keyboardInputModule as inputModule
+elif INPUT_MODULE == "JOYSTICK":
+    import joystickInputModule as inputModule
+else:
+    raise Exception("Bad input module")
 
 directionLineLen = SNAKE_SIZE*3
 holeSize = 10  # Number of updates during a hole
