@@ -20,19 +20,22 @@ pygame.joystick.init()
 joystick0 = pygame.joystick.Joystick(0)
 joystick0.init()
 
+joystick1 = pygame.joystick.Joystick(1)
+joystick1.init()
+
 p1 = JoystickInputConfig(joystick0, 0, 1)
 p2 = JoystickInputConfig(joystick0, 2, 3)
 p3 = JoystickInputConfig(joystick0, 4, 5)
 p4 = JoystickInputConfig(joystick0, 6, 7)
-p5 = JoystickInputConfig(joystick0, 8, 9)
-p6 = JoystickInputConfig(joystick0, 5, 6)
-p7 = JoystickInputConfig(joystick0, 5, 6)
-p8 = JoystickInputConfig(joystick0, 0, 1)
+p5 = JoystickInputConfig(joystick1, 0, 1)
+p6 = JoystickInputConfig(joystick1, 1, 2)
+p7 = JoystickInputConfig(joystick1, 3, 4)
+p8 = JoystickInputConfig(joystick1, 5, 6)
 
 playerInputs = (p1, p2, p3, p4, p5, p6, p7, p8)
 
 start_input_joystick = joystick0
-start_input_button = 9
+start_input_button = 8
 
 def takeInput(playerId):
     string = ''
