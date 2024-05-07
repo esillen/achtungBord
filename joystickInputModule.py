@@ -37,9 +37,11 @@ playerInputs = (p1, p2, p3, p4, p5, p6, p7, p8)
 start_input_joystick = joystick0
 start_input_button = 8
 
+def update():
+  pygame.event.get()
+
 def takeInput(playerId):
     string = ''
-    pygame.event.get()
     if playerInputs[playerId].left_is_pressed():
         string += 'l'
     if playerInputs[playerId].right_is_pressed():

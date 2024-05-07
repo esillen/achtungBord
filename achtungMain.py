@@ -24,7 +24,7 @@ pygame.mouse.set_visible(False)
 fpsClock = pygame.time.Clock()
 
 if USE_FULL_SCREEN:
-    windowSurfaceObj = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
+    windowSurfaceObj = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SCALED)
 else:
     windowSurfaceObj = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
@@ -84,6 +84,7 @@ while True:
         windowSurfaceObj.fill(pygame.Color(0,0,0))
         displayTextAndLogo()
         displayInfo()
+        inputModule.update_pressed()
         for player in allPlayers:
             if 'l' in inputModule.takeInput(player.playerId): #Maybe use event queue?
                 player.ready = True

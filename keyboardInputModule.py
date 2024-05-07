@@ -15,10 +15,14 @@ playerInputs = (p1, p2, p3, p4, p5, p6, p7, p8)
 
 start_input = K_SPACE
 
+pressed = None
+
+def update_pressed():
+    global pressed
+    pressed = pygame.key.get_pressed()  # potentially slow to do for each player
 
 def takeInput(playerId):
     string = ''
-    pressed = pygame.key.get_pressed()  # potentially slow to do for each player
     if pressed[playerInputs[playerId][0]]:
         string += 'l'
     if pressed[playerInputs[playerId][1]]:
