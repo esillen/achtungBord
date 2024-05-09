@@ -64,26 +64,30 @@ def spawnPlayers(players, pygameSurface):
             check_exit_event()
 
 def spawnPlayers2(players, pygameSurface):
+    pygameSurface.fill(BACKGROUND_COLOR)
+    drawing.drawField(len(players), pygameSurface)
     for player in players:
         player.resetRandomize(len(players))
-    for time_tick in range(SPAWN_TIME * GAME_FPS):
-        pygameSurface.fill(BACKGROUND_COLOR)
-        drawing.drawField(len(players), pygameSurface)
         
+    for time_tick in range(SPAWN_TIME * GAME_FPS):
         time_tick_fraction = time_tick / (SPAWN_TIME * GAME_FPS)
         inputModule.update_pressed()
         for player in players:
+            arcrect = drawing.getSpawnArcRect(player)
+            pygame.draw.rect(pygameSurface, FIELD_COLOR, arcrect) # Fill in the area around the player
+            drawing.drawSpawnPositionHelperLine(player, pygameSurface)
             player.updateDirection(
                 inputModule.takeInput(player.playerId))
             tempPlayerPos = player.getRoundedPos()
-            drawing.drawSpawnPositionHelperLine(player, time_tick_fraction, pygameSurface)
+            drawing.drawSpawnArc(player, time_tick_fraction, pygameSurface)
             pygame.draw.circle(
                 pygameSurface, (player.color), tempPlayerPos, SNAKE_SIZE)
             pygame.draw.aaline(pygameSurface, (player.color), tempPlayerPos, (
-                tempPlayerPos[0] + player.currentDirection[0]*directionLineLen, tempPlayerPos[1] + player.currentDirection[1]*directionLineLen), 1)
-        
+                tempPlayerPos[0] + player.currentDirection[0]*directionLineLen, tempPlayerPos[1] + player.currentDirection[1]*directionLineLen), 2)
+            pygame.display.update(arcrect)
+
         drawing.drawInGameScores(players, pygameSurface)
-        pygame.display.update()
+        #pygame.display.update() # Again, Morris' raspberry pi is too slow for this to work so display.update() needs to target smaller portions of the screen
         fpsClock.tick(GAME_FPS)
         pygame.event.pump()
         check_exit_event()
@@ -104,10 +108,12 @@ def updateKurves(players, pygameSurface):
                 player.updatePos()
                 pygame.draw.circle(
                     pygameSurface, (player.color), player.getRoundedPos(), SNAKE_SIZE)
+                # Shouldn't be necessary but for extremely slow computers such as Morris' raspberry pi, this is required.
+                pygame.display.update(player.getRoundedPos()[0] - SNAKE_SIZE, player.getRoundedPos()[1] - SNAKE_SIZE, SNAKE_SIZE*2, SNAKE_SIZE*2)
             else:
                 updateScores(players)
                 drawing.drawInGameScores(players, pygameSurface)
-    pygame.display.update()
+    #pygame.display.update() # This should not be necessary to comment out but Morris' raspberry pi is too slow.
     pygame.event.pump()
     fpsClock.tick(GAME_FPS)
     check_exit_event()
