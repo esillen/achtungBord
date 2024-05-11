@@ -80,8 +80,8 @@ def drawRotatedText(text, size, color, angle, center, surface):
     rotatedRect = rotatedSurf.get_rect()
     rotatedRect.center = center # (centerx,centery)
     surface.blit(rotatedSurf, rotatedRect)
-
-def drawSpawnPositionHelperLine(player, surface):
+    
+def drawSpawnPositionHelperLine(player, interpolationT, surface):
     color = SNAKE_COLORS[player.playerId]
     if PHYSICAL_SCREEN_MODE == "UPRIGHT":
         centerx = SCORE_TEXT_UPRIGHT_POSES[player.playerId][0]
@@ -96,23 +96,15 @@ def drawSpawnPositionHelperLine(player, surface):
 
     player_pos = player.getRoundedPos()
 
-    pygame.draw.line(surface, (color), (centerx, centery), player_pos, 1)
-
-def getSpawnArcRect(player):
-    player_pos = player.getRoundedPos()
-    rect_size = SNAKE_SIZE * 10
-    arcrect = pygame.Rect(0, 0, rect_size, rect_size).move(player_pos[0] - (rect_size / 2), player_pos[1] - (rect_size / 2))
-    return arcrect
-
-def drawSpawnArc(player, interpolationT, surface):
-    color = SNAKE_COLORS[player.playerId]
+    pygame.draw.aaline(surface, (color), (centerx, centery), player_pos, 1)
 
     #interpolated_x = centerx + (player_pos[0] - centerx) * interpolationT
     #interpolated_y = centery + (player_pos[1] - centery) * interpolationT
     #pygame.draw.line(surface, (color), (centerx, centery), (interpolated_x, interpolated_y), 3)
     #pygame.draw.circle(surface, (color), (centerx, centery), 3)
     #pygame.draw.circle(surface, (color), (interpolated_x, interpolated_y), 3)
-    arcrect = getSpawnArcRect(player)
+    rect_size = SNAKE_SIZE * 10
+    arcrect = pygame.Rect(0, 0, rect_size, rect_size).move(player_pos[0] - (rect_size / 2), player_pos[1] - (rect_size / 2))
     pygame.draw.arc(surface, (color), arcrect, 0, interpolationT * math.pi * 2, SNAKE_SIZE)
     if interpolationT > 0.05:
         pygame.draw.arc(surface, (color), arcrect, math.pi * 2 * 0.05, interpolationT * math.pi * 2, SNAKE_SIZE)
