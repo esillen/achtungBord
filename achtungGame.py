@@ -49,7 +49,6 @@ def spawnPlayers(players, pygameSurface):
         for i in range(delayTime):
             # TODO: add some delay between spawns
             drawing.drawField(len(players), pygameSurface)
-            inputModule.update_pressed()
             for player in spawnedPlayers:
                 player.updateDirection(
                     inputModule.takeInput(player.playerId))
@@ -71,7 +70,6 @@ def spawnPlayers2(players, pygameSurface):
         drawing.drawField(len(players), pygameSurface)
         
         time_tick_fraction = time_tick / (SPAWN_TIME * GAME_FPS)
-        inputModule.update_pressed()
         for player in players:
             player.updateDirection(
                 inputModule.takeInput(player.playerId))
@@ -90,7 +88,6 @@ def spawnPlayers2(players, pygameSurface):
     
 
 def updateKurves(players, pygameSurface):
-    inputModule.update_pressed()
     for player in players:
         if player.alive:
             player.updateDirection(
@@ -128,7 +125,6 @@ def gameLoop(players, pygameSurface):
         drawing.drawField(len(players), pygameSurface)
         drawing.drawInGameScores(players, pygameSurface)
         
-        inputModule.update_pressed()
         # So that we don't collide in our line
         for player in players:
             player.updateDirection(inputModule.takeInput(player.playerId))

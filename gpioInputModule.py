@@ -22,8 +22,6 @@ def _setup_inputs():
         GPIO.setup(inputs[0], GPIO.IN, pull_up_down=GPIO.PUD_UP)
         GPIO.setup(inputs[1], GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-def update_pressed():
-    pass # Not necessary
 
 def takeInput(playerId):
     string = ''
