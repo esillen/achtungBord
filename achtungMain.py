@@ -73,6 +73,9 @@ def check_exit_event():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+        if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
+            pygame.quit()
+            sys.exit()
 
 #collect Money
 #credits = 30
